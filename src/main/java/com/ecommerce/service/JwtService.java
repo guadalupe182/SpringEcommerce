@@ -1,34 +1,35 @@
 package com.ecommerce.service;
 
-import java.security.Key;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import io.jsonwebtoken.Claims;
+import com.ecommerce.config.JwtConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import java.security.Key;
+import java.util.Date;
 
 @Service
 public class JwtService {
 
     private final Key secretKey; // Clave segura generada automáticamente
-    private final long expirationTime; // Tiempo de expiración del token
+    private final JwtConfig jwtConfig;
 
-    public JwtService(@Value("${jwt.expiration}") long expirationTime) {
+    @Autowired
+    public JwtService(JwtConfig jwtConfig) {
         // Genera una clave segura automáticamente para el algoritmo HS256
         this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        this.expirationTime = expirationTime;
+        this.jwtConfig = jwtConfig;
     }
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -39,27 +40,19 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+        final Date expiration = extractExpiration(token);
+        return expiration.before(new Date());
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractAllClaims(token).getSubject();
     }
 
-    public <T> T extractClaim(String token, java.util.function.Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+    private Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
     }
 }
