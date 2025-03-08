@@ -34,3 +34,28 @@ build/
 
 ### Archivos de Entorno ###
 .env
+*.local
+
+### Scripts ###
+*.py
+*.tmp
+*.temp
+
+### Logs ###
+*.log
+*.log.*
+*.access
+*.access.*
+
+### Maven ###
+log/
+pom.xml.tag
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+### Archivos de sistema ###
+.DS_Store
+Thumbs.db

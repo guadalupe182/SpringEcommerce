@@ -12,36 +12,28 @@ csv_file = "backlog_actualizado.csv"  # Cambia esto al nombre de tu archivo CSV
 # Leer el archivo CSV
 with open(csv_file, "r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
+    
+    # Imprimir las columnas del CSV para verificar
+    print("Columnas del CSV:", reader.fieldnames)
+    
     for row in reader:
-        issue_key = row["Issue Key"]
-        summary = row["Summary"]
+        issue_key = row["Clave de incidencia"]  # Usar el nombre en español
+        summary = row["Resumen"]  # Usar el nombre en español
 
-        # Verificar si ya existe un commit con el mismo Issue Key
-        commit_exists = False
-        for commit in repo.iter_commits():
-            if issue_key in commit.message:
-                commit_exists = True
-                print(f"El commit para {issue_key} ya existe: {commit.message.strip()}")
-                break
+        # Crear un archivo temporal para el commit
+        file_name = f"{issue_key}.txt"
+        with open(file_name, "w") as f:
+            f.write(summary)
 
-        # Si no existe, crear el commit
-        if not commit_exists:
-            # Crear un archivo temporal para el commit
-            file_name = f"{issue_key}.txt"
-            with open(file_name, "w") as f:
-                f.write(summary)
+        # Agregar el archivo al stage
+        repo.index.add([file_name])
 
-            # Agregar el archivo al stage
-            repo.index.add([file_name])
+        # Crear el commit
+        commit_message = f"{issue_key} {summary}"
+        repo.index.commit(commit_message)
+        print(f"Commit creado: {commit_message}")
 
-            # Crear el commit
-            commit_message = f"{issue_key} {summary}"
-            repo.index.commit(commit_message)
-            print(f"Commit creado: {commit_message}")
+        # Eliminar el archivo temporal (opcional)
+        os.remove(file_name)
 
-            # Eliminar el archivo temporal (opcional)
-            os.remove(file_name)
-        else:
-            print(f"Saltando {issue_key}: ya existe un commit.")
-
-print("¡Proceso completado!")
+print("¡Todos los commits han sido creados!")
