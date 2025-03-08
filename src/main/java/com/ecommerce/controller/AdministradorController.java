@@ -14,17 +14,16 @@ import com.ecommerce.service.ProductoService;
 @Controller
 @RequestMapping("/administrador")
 public class AdministradorController {
-	
-	@Autowired
-	private ProductoService productoService;
-	
-	@GetMapping("")
-	public String home(Model model) {
-		
-		List<Producto> productos = productoService.findAll();
-		model.addAttribute("productos", productos);
-		
-		return "administrador/home";
-	}
-
+    
+    @Autowired
+    private ProductoService productoService;
+    
+    @GetMapping("/home")
+    public String adminHome(Model model) {
+        
+        List<Producto> productos = productoService.findAll();
+        model.addAttribute("productos", productos);
+        
+        return "administrador/home";
+    }
 }
