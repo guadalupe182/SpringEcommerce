@@ -10,7 +10,7 @@ repo = Repo(repo_path)
 csv_file = "backlog_actualizado.csv"  # Cambia esto al nombre de tu archivo CSV
 
 # Leer el archivo CSV
-with open(csv_file, "r", encoding="utf-8") as file:
+with open(csv_file, "r", encoding="utf-8-sig") as file:  # Usar utf-8-sig para eliminar el BOM
     reader = csv.DictReader(file)
     
     # Imprimir las columnas del CSV para verificar
