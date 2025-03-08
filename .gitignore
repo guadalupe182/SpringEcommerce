@@ -59,3 +59,6 @@ buildNumber.properties
 ### Archivos de sistema ###
 .DS_Store
 Thumbs.db
+
+# Archivos temporales de editores
+.~lock.*
