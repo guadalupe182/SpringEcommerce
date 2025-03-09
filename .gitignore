@@ -32,7 +32,3 @@ build/
 ### VS Code ###
 .vscode/
 .env
-
-
-### Clean ###
-SpringEcommerce-clean/
