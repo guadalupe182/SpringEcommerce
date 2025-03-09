@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Tiempo de expiración del token en milisegundos (1 hora)"
+    },
+    {
+      "name": "jwt.audience",
+      "type": "java.lang.String",
+      "description": "Audiencia del token (opcional, si lo usas en otras partes)"
+    },
+    {
+      "name": "jwt.issuer",
+      "type": "java.lang.String",
+      "description": "Emisor del token (opcional, si lo usas en otras partes)"
+    },
+    {
+      "name": "jwt.header",
+      "type": "java.lang.String",
+      "description": "Encabezado HTTP para el token"
+    },
+    {
+      "name": "jwt.prefix",
+      "type": "java.lang.String",
+      "description": "Prefijo del token en el encabezado"
+    }
+  ]
+}
