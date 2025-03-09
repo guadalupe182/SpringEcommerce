@@ -21,7 +21,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-   //inyeccion de depedencia implicita por medio del constructor
     public JwtRequestFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;

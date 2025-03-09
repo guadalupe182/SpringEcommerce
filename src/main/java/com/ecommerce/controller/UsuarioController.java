@@ -49,8 +49,8 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/login")
-	public String login() {
-		return "usuario/login";
+	public String usuarioLogin() {
+		return "usuario/login"; // Devuelve la vista usuario/login.html
 	}
 	
 	@PostMapping("/acceder")
@@ -96,7 +96,7 @@ public class UsuarioController {
 		//session
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		
-		return "/usuario/detallecompra";
+		return "usuario/detallecompra";
 	}
 
 }

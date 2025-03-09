@@ -1,0 +1,1 @@
+Integración de Mercado Pago con seguridad mediante JWT

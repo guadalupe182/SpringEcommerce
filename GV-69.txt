@@ -1,0 +1,1 @@
+Configurar CORS en Spring Boot para permitir solicitudes desde React
