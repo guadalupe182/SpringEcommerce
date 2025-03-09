@@ -1,1 +1,0 @@
-Desplegar aplicación en AWS EC2 o Elastic Beanstalk

@@ -1,1 +1,0 @@
-Diseñar la interfaz de usuario e implementar funcionalidades principales

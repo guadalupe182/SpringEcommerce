@@ -1,1 +1,0 @@
-Validación de seguridad en el frontend con React

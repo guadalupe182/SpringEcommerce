@@ -1,1 +1,0 @@
-Implementar autenticación JWT en React
